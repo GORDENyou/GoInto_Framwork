@@ -1,14 +1,17 @@
 package p.gordenyou.gointoframwork;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import p.gordenyou.gointoframwork.annotation.AnnotationActivity;
 
 public class MainActivity extends Activity {
 
@@ -24,5 +27,19 @@ public class MainActivity extends Activity {
         LinkedList<String> linkedList = new LinkedList<>();
         linkedList.add("注解实现自动获取 Intent 携带值");
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(linkedList);
+
+        adapter.setListener((view, position) -> {
+            switch (position){
+                case 0:
+                    startActivity(new Intent(MainActivity.this, AnnotationActivity.class).putExtra("testString", "TEST!!!"));
+                    break;
+            }
+        });
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new RecyclerItemDecoration());
+        recyclerView.setAdapter(adapter);
     }
 }
