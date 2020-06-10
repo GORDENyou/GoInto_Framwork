@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD) //定义为变量注解
 @Retention(RetentionPolicy.RUNTIME) // 我们如果使用注解，需要在运行时都可以取到。
 public @interface InjectIntent {
-    String Value();
+    String Value() default "";
 }
