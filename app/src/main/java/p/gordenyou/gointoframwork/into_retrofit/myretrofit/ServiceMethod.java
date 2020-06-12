@@ -3,47 +3,87 @@ package p.gordenyou.gointoframwork.into_retrofit.myretrofit;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import okhttp3.Call;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.Request;
 import p.gordenyou.gointoframwork.into_retrofit.annotation.Field;
 import p.gordenyou.gointoframwork.into_retrofit.annotation.GET;
 import p.gordenyou.gointoframwork.into_retrofit.annotation.POST;
 import p.gordenyou.gointoframwork.into_retrofit.annotation.Query;
 
 public class ServiceMethod {
-    private final String relativeUrl;
     private final HttpUrl baseUrl;
     private final String httpMethod;
+    private final String relativeUrl;
     private final boolean hasBody;
     private final ParameterHandler[] parameterHandler;
 
+    HttpUrl.Builder urlBuilder;
+    FormBody.Builder bodyBuilder;
+    private Call.Factory callFactory;
+
     public ServiceMethod(Builder builder) {
         baseUrl = builder.myRetrofit.baseUrl;
-        // todo 这里的 callFactory 是用来干什么的？
-//        callFactory = builder.myRetrofit.callFactory;
 
         httpMethod = builder.httpMethod;
         relativeUrl = builder.relativeUrl;
         hasBody = builder.hasBody;
         parameterHandler = builder.parameterHandler;
+        callFactory = builder.myRetrofit.callFactory;
 
         //如果是有请求体,创建一个okhttp的请求体对象
         if (hasBody) {
-            // todo formBuild 做什么?
-//            formBuild = new FormBody.Builder();
+            //  bodyBuilder 做什么? 构建 POST 请求的请求体
+            bodyBuilder = new FormBody.Builder();
         }
     }
 
+    // 将 key 和 value 拼接到 url 中。
     public void addQueryParameter(String key, String value) {
-        //todo
+        if (urlBuilder == null) {
+            urlBuilder = baseUrl.newBuilder(relativeUrl);
+        }
+        urlBuilder.addQueryParameter(key, value);
     }
 
+    // 将 key 和 value 放入请求体
     public void addFiledParameter(String key, String value) {
-        //todo
+        bodyBuilder.add(key, value);
     }
 
     public Object invoke(Object[] args) {
-        //todo
-        return null;
+        /*
+        处理请求的地址与参数
+         */
+        for (int i = 0; i < parameterHandler.length; i++) {
+            ParameterHandler handler = parameterHandler[i];
+            // 我们会调用中的方法最终传递了请求的 value
+            handler.apply(this, args[i].toString());
+        }
+
+        /*
+        接下来拼接最终的 url
+         */
+        HttpUrl url;
+        if(urlBuilder == null){
+            urlBuilder = baseUrl.newBuilder(relativeUrl);
+        }
+        url = urlBuilder.build();
+
+        /*
+        构建请求体
+         */
+        FormBody formBody = null;
+        if(bodyBuilder != null){
+            formBody = bodyBuilder.build();
+        }
+
+        /*
+        最终的请求的构建
+         */
+        Request request = new Request.Builder().url(url).method(httpMethod, formBody).build();
+        return callFactory.newCall(request);
     }
 
     public static class Builder {
@@ -55,12 +95,12 @@ public class ServiceMethod {
         private final MyRetrofit myRetrofit;
 
         private String httpMethod;
-        private String relativeUrl;
+        private String relativeUrl; // 请求的具体“方法”
         private boolean hasBody;
         private ParameterHandler[] parameterHandler;
 
         public Builder(MyRetrofit myRetrofit, Method method) {
-            // 这里需要持有 MyRetrofit 的一个对象，方便我们获取他的 Url 。
+            // 这里需要持有 MyRetrofit 的一个对象，方便我们获取他的 baseUrl 。
             this.myRetrofit = myRetrofit;
 
             // 获取方法上所有的注解
@@ -101,7 +141,7 @@ public class ServiceMethod {
                 // 获取一个参数上所有的注解
                 Annotation[] annotations = parameterAnnotations[i];
 
-                // 处理每一个注解
+                // 处理每一个注解，可以看出有不同的处理方式。
                 for (Annotation annotation : annotations) {
                     if (annotation instanceof Field) {
                         String value = ((Field) annotation).value();

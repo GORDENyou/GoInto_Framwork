@@ -15,19 +15,21 @@
         app:layout_constraintGuide_begin="218dp" />
 
     <Button
-        android:id="@+id/rf_get"
+        android:id="@+id/rf_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="post请求"
+        android:onClick="post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
-        android:id="@+id/rf_post"
+        android:id="@+id/rf_get"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="get请求"
+        android:onClick="get"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
@@ -44,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MY Post请求"
+        android:onClick="myPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -60,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MY Get请求"
+        android:onClick="myGet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
