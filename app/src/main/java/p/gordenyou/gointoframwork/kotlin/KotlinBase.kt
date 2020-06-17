@@ -1,5 +1,9 @@
 package p.gordenyou.gointoframwork.kotlin
 
+
+/**
+ * 主要了解了数组的创建和访问。
+ */
 fun main() {
     printArray()
 }
