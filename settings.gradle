@@ -1,3 +1,4 @@
+include ':goui'
 include ':lib'
 rootProject.name='GoInto_Framwork'
 include ':app'
