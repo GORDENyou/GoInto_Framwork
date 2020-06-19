@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
         LinkedList<String> linkedList = new LinkedList<>();
         linkedList.add("1.注解实现自动获取 Intent 携带值");
         linkedList.add("2.手写自己的retrofit(构建者模式，注解，反射，动态代理)");
+        linkedList.add("3.慕课主页面");
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(linkedList);
 
         adapter.setListener((view, position) -> {

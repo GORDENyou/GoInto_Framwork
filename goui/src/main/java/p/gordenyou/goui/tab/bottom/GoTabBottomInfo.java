@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 import androidx.fragment.app.Fragment;
 
-public class HiTabBottomInfo<Color>{
+public class GoTabBottomInfo<Color>{
     // 枚举实现的方式
     public enum TabType {
         BITMAP, ICON
@@ -25,7 +25,7 @@ public class HiTabBottomInfo<Color>{
     public TabType tabType;
 
     // Bitmap 方式实现所用的构造器
-    public HiTabBottomInfo(String name, Bitmap defaultBitmap, Bitmap selectedBitmap) {
+    public GoTabBottomInfo(String name, Bitmap defaultBitmap, Bitmap selectedBitmap) {
         this.name = name;
         this.defaultBitmap = defaultBitmap;
         this.selectedBitmap = selectedBitmap;
@@ -33,7 +33,7 @@ public class HiTabBottomInfo<Color>{
     }
 
     // iconFront 方式实现所用的构造器
-    public HiTabBottomInfo(String name, String iconFont, String defaultIconName, String selectedIconName, Color defaultColor, Color tintColor) {
+    public GoTabBottomInfo(String name, String iconFont, String defaultIconName, String selectedIconName, Color defaultColor, Color tintColor) {
         this.name = name;
         this.iconFont = iconFont;
         this.defaultIconName = defaultIconName;
