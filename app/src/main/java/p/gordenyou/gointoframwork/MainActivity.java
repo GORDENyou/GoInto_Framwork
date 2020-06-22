@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import p.gordenyou.gointoframwork.annotation.AnnotationActivity;
 import p.gordenyou.gointoframwork.into_retrofit.MyRetrofitActivity;
+import p.gordenyou.gointoframwork.mooc.MoocMainActivity;
 
 public class MainActivity extends Activity {
 
@@ -49,6 +50,9 @@ public class MainActivity extends Activity {
                 break;
             case 1:
                 startActivity(new Intent(MainActivity.this, MyRetrofitActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(MainActivity.this, MoocMainActivity.class));
                 break;
         }
     }

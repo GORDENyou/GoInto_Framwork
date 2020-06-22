@@ -39,12 +39,16 @@ public class GoTabBottom extends RelativeLayout implements IGoTab<GoTabBottomInf
     }
 
     private void init() {
-        LayoutInflater.from(getContext()).inflate(R.layout.hi_tab_bottom, this);
+        LayoutInflater.from(getContext()).inflate(R.layout.go_tab_bottom, this);
         tabImageView = findViewById(R.id.iv_image);
         tabIconView = findViewById(R.id.tv_icon);
         tabNameView = findViewById(R.id.tv_name);
     }
 
+    /**
+     * 获取 Tab 设置的数据
+     * @return tabInfo
+     */
     public GoTabBottomInfo<?> getTabInfo() {
         return tabInfo;
     }
@@ -66,7 +70,7 @@ public class GoTabBottom extends RelativeLayout implements IGoTab<GoTabBottomInf
      * @param data 泛型数据
      */
     @Override
-    public void setHiTabInfo(@NonNull GoTabBottomInfo<?> data) {
+    public void setTabInfo(@NonNull GoTabBottomInfo<?> data) {
         this.tabInfo = data;
         inflateInfo(false, true);
     }
@@ -81,7 +85,7 @@ public class GoTabBottom extends RelativeLayout implements IGoTab<GoTabBottomInf
             if(init){
                 // 如果已经初始化了
                 tabImageView.setVisibility(GONE);
-                tabIconView.setVisibility(GONE);
+                tabIconView.setVisibility(VISIBLE);
 
                 // 设置字体
                 Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), tabInfo.iconFont);

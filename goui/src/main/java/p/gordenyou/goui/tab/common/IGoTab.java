@@ -12,7 +12,7 @@ public interface IGoTab<D> extends IGoTabLayout.OnTabSelectedListener<D> {
      * 设置 Tab 的数据
      * @param data 泛型数据
      */
-    void setHiTabInfo(@NonNull D data);
+    void setTabInfo(@NonNull D data);
 
     /**
      * 动态修改某个item的大小
